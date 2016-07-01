@@ -8,12 +8,13 @@ import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.codepath.apps.tweeter.models.Tweet;
+import com.codepath.apps.tweeter.models.User;
 import com.loopj.android.http.JsonHttpResponseHandler;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import cz.msebera.android.httpclient.Header;
@@ -55,14 +56,13 @@ public class ComposeActivity extends AppCompatActivity {
         });
     }
 
+
+
+
+
     public void onSubmit(View v){
         final String status = etValue.getText().toString();
 
-        // on some click or some loading we need to wait for...
-        ProgressBar pb = (ProgressBar) findViewById(R.id.pbLoading);
-        pb.setVisibility(ProgressBar.VISIBLE);
-// run a background job and once complete
-        pb.setVisibility(ProgressBar.INVISIBLE);
 
         client.post(status, new JsonHttpResponseHandler() {
             @Override
@@ -87,7 +87,23 @@ public class ComposeActivity extends AppCompatActivity {
             }
         });
 
-        client.
+        client.getUserInfo(new JsonHttpResponseHandler() {
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                User user = User.fromJSON(response);
+
+                // get propic, username, and name
+
+                String sName = user.getScreenName();
+                getSupportActionBar().setTitle(sName);
+
+
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONArray errorResponse) {
+                super.onFailure(statusCode, headers, throwable, errorResponse);
+            }
+        });
 
     }
 }

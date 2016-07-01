@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -26,11 +27,7 @@ public class TimelineActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_timeline);
 
-        // on some click or some loading we need to wait for...
-        ProgressBar pb = (ProgressBar) findViewById(R.id.pbLoading);
-        pb.setVisibility(ProgressBar.VISIBLE);
-// run a background job and once complete
-        pb.setVisibility(ProgressBar.INVISIBLE);
+
 
         // get viewpager
         vpPager = (ViewPager) findViewById(R.id.viewpager);
@@ -44,6 +41,7 @@ public class TimelineActivity extends AppCompatActivity {
 
 
     public void onProfileView(MenuItem mi){
+
         Intent i = new Intent(this, ProfileActivity.class);
         startActivity(i);
     }
@@ -51,6 +49,30 @@ public class TimelineActivity extends AppCompatActivity {
     public void onComposeClick(MenuItem mi){
         Intent i = new Intent(this,ComposeActivity.class);
         startActivityForResult(i, ComposeActivity.COMPOSE_REQUEST_CODE);
+    }
+
+    // progress within actionbar
+
+    // Instance of the progress action-view
+    MenuItem miActionProgressItem;
+
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        // Store instance of the menu item containing progress
+        miActionProgressItem = menu.findItem(R.id.miActionProgress);
+        // Extract the action-view from the menu item
+        ProgressBar v =  (ProgressBar) MenuItemCompat.getActionView(miActionProgressItem);
+        // Return to finish
+        return super.onPrepareOptionsMenu(menu);
+    }
+    public void showProgressBar() {
+        // Show progress item
+        miActionProgressItem.setVisible(true);
+    }
+
+    public void hideProgressBar() {
+        // Hide progress item
+        miActionProgressItem.setVisible(false);
     }
 
 

@@ -1,6 +1,7 @@
 package com.codepath.apps.tweeter.fragments;
 
 import android.os.Bundle;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
 
 import com.codepath.apps.tweeter.TwitterApplication;
@@ -38,7 +39,7 @@ public class UserTimelineFragment extends TweetsListFragment {
         return userFragment;
     }
 
-    private void populateTimeline() {
+    public void populateTimeline() {
         String screenName = getArguments().getString("screen_name");
         client.getUserTimeline(screenName, new JsonHttpResponseHandler() {
             @Override
@@ -49,6 +50,28 @@ public class UserTimelineFragment extends TweetsListFragment {
                 // load model data into list view
 
                 addAll(Tweet.fromJSONArray(json));
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                Log.d("DEBUG", errorResponse.toString());
+            }
+        });
+    }
+
+    @Override
+    public void populateTimeline(final SwipeRefreshLayout layout) {
+        String screenName = getArguments().getString("screen_name");
+        client.getUserTimeline(screenName, new JsonHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONArray json) {
+                Log.d("DEBUG", json.toString());
+                // deserialize json
+                // create models and add to adapter
+                // load model data into list view
+
+                addAll(Tweet.fromJSONArray(json));
+                layout.setRefreshing(false);
             }
 
             @Override
