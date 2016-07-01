@@ -1,6 +1,7 @@
 package com.codepath.apps.tweeter;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -35,6 +36,10 @@ public class TimelineActivity extends AppCompatActivity {
         vpPager.setAdapter(new TweetsPagerAdapter(getSupportFragmentManager()));
         // find pager sliding tabs
         PagerSlidingTabStrip tabStrip = (PagerSlidingTabStrip) findViewById(R.id.tabs);
+
+        tabStrip.setTextColor(Color.parseColor("#55acee"));
+
+
         // attach pager tabs to viewpager
         tabStrip.setViewPager(vpPager);
     }

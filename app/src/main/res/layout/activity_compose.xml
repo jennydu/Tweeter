@@ -12,34 +12,75 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 
+
+    <LinearLayout
+        android:layout_marginTop="100dp"
+        android:layout_marginRight="20dp"
+        android:layout_alignParentRight="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_marginRight="20dp"
+            android:orientation="vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/tvName"
+                android:layout_marginBottom="5dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:id="@+id/tvScreenName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
+
+        <ImageView
+            android:id="@+id/ivProfileImage"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            />
+
+    </LinearLayout>
+
+
     <EditText
         android:id="@+id/etTweet"
+        android:layout_centerInParent="true"
+        android:padding="20dp"
         android:layout_width="match_parent"
-        android:layout_height="200dp" />
+        android:hint="What's happening?"
+        android:layout_height="300dp" />
 
     <TextView
         android:layout_below="@+id/etTweet"
         android:id="@+id/tvCharCount"
         android:text="140"
-
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:layout_toLeftOf="@+id/btnSubmitTweet"
+        android:layout_marginRight="10dp"/>
 
     <Button
         android:id="@+id/btnSubmitTweet"
         android:text="@string/Submit"
-        android:layout_width="wrap_content"
+        android:textColor="#000000"
+        android:textStyle="bold"
+        android:background="#55acee"
+        android:layout_width="100dp"
         android:layout_height="wrap_content"
         android:onClick="onSubmit"
+        android:layout_marginRight="20dp"
         android:layout_below="@+id/etTweet"
-        android:layout_toRightOf="@+id/tvCharCount"
         android:layout_alignParentRight="true"
-        android:layout_centerHorizontal="true" />
 
-    <ProgressBar
-        android:id="@+id/pbLoading"
-        android:visibility="invisible"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+
+         />
+
+
 
 </RelativeLayout>

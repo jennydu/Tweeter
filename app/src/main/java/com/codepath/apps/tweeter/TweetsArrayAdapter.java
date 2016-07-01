@@ -15,6 +15,8 @@ import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
+import jp.wasabeef.picasso.transformations.RoundedCornersTransformation;
+
 
 /**
  * takes tweets and turns them into views that will be displayed in a list
@@ -59,7 +61,8 @@ public class TweetsArrayAdapter extends ArrayAdapter<Tweet>{
 
         tvBody.setText(tweet.getBody());
         ivProfileImage.setImageResource(android.R.color.transparent); // clears out old image for recycler view
-        Picasso.with(getContext()).load(tweet.getUser().getProfileImageUrl()).into(ivProfileImage);
+        Picasso.with(getContext()).load(tweet.getUser().getProfileImageUrl())
+                .transform(new RoundedCornersTransformation(3, 3)).into(ivProfileImage);
 
         ivProfileImage.setOnClickListener(new View.OnClickListener(){
 

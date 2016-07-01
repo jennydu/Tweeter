@@ -8,16 +8,19 @@ import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.codepath.apps.tweeter.models.Tweet;
 import com.codepath.apps.tweeter.models.User;
 import com.loopj.android.http.JsonHttpResponseHandler;
+import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
 
 import cz.msebera.android.httpclient.Header;
+import jp.wasabeef.picasso.transformations.RoundedCornersTransformation;
 
 public class ComposeActivity extends AppCompatActivity {
 
@@ -25,6 +28,9 @@ public class ComposeActivity extends AppCompatActivity {
     TextView tvCharCount;
     public static final int COMPOSE_REQUEST_CODE = 69;
     EditText etValue;
+    ImageView ivProfileImage;
+    TextView tvName;
+    TextView tvScreenName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +40,9 @@ public class ComposeActivity extends AppCompatActivity {
 
         etValue = (EditText) findViewById(R.id.etTweet);
         tvCharCount = (TextView) findViewById(R.id.tvCharCount);
+        ivProfileImage = (ImageView) findViewById(R.id.ivProfileImage);
+        tvScreenName = (TextView) findViewById(R.id.tvScreenName);
+        tvName = (TextView) findViewById(R.id.tvName);
 
         etValue.addTextChangedListener(new TextWatcher() {
             @Override
@@ -54,13 +63,35 @@ public class ComposeActivity extends AppCompatActivity {
                 tvCharCount.setText(Integer.toString(length));
             }
         });
+
+        client.getUserInfo(new JsonHttpResponseHandler() {
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                User user = User.fromJSON(response);
+
+                // get propic, username, and name
+                Picasso.with(getApplicationContext()).load(user.getProfileImageUrl())
+                        .transform(new RoundedCornersTransformation(3, 3)).into(ivProfileImage);
+
+                tvName.setText(user.getName());
+                tvScreenName.setText("@" + user.getScreenName());
+
+                getSupportActionBar().setTitle("Compose new tweet");
+
+
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONArray errorResponse) {
+                super.onFailure(statusCode, headers, throwable, errorResponse);
+            }
+        });
     }
 
 
 
 
 
-    public void onSubmit(View v){
+    public void onSubmit(final View v){
         final String status = etValue.getText().toString();
 
 
@@ -87,23 +118,9 @@ public class ComposeActivity extends AppCompatActivity {
             }
         });
 
-        client.getUserInfo(new JsonHttpResponseHandler() {
-            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-                User user = User.fromJSON(response);
-
-                // get propic, username, and name
-
-                String sName = user.getScreenName();
-                getSupportActionBar().setTitle(sName);
 
 
-            }
 
-            @Override
-            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONArray errorResponse) {
-                super.onFailure(statusCode, headers, throwable, errorResponse);
-            }
-        });
 
     }
 }
