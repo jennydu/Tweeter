@@ -49,14 +49,13 @@
         </activity>
         <activity
             android:name=".TimelineActivity"
-            android:label="@string/title_activity_timeline"
-             />
+            android:label="@string/title_activity_timeline" />
         <activity
             android:name=".ProfileActivity"
-            android:label="@string/title_activity_profile"
-             />
+            android:label="@string/title_activity_profile" />
         <activity android:name=".TweetDetailActivity" />
-        <activity android:name=".ComposeActivity"></activity>
+        <activity android:name=".ComposeActivity" />
+        <activity android:name=".FollowersActivity"></activity>
     </application>
 
 </manifest>

@@ -20,6 +20,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import cz.msebera.android.httpclient.Header;
+import jp.wasabeef.picasso.transformations.RoundedCornersTransformation;
 
 public class ProfileActivity extends AppCompatActivity {
 
@@ -106,6 +107,8 @@ public class ProfileActivity extends AppCompatActivity {
                 }
             });
         }
+
+
     }
 
     // progress within actionbar
@@ -132,7 +135,7 @@ public class ProfileActivity extends AppCompatActivity {
         miActionProgressItem.setVisible(false);
     }
 
-    private void populateProfileHeader(User user) {
+    private void populateProfileHeader(final User user) {
         TextView tvName = (TextView) findViewById(R.id.tvFullName);
         TextView tvScreenName = (TextView) findViewById(R.id.tvScreenName);
         TextView tvTagline = (TextView) findViewById(R.id.tvTagline);
@@ -145,7 +148,10 @@ public class ProfileActivity extends AppCompatActivity {
         tvTagline.setText(user.getTagline());
         tvFollowers.setText(user.getFollowersCount() + " Followers");
         tvFollowing.setText(user.getFollowingCount() + " Following");
-        Picasso.with(this).load(user.getProfileImageUrl()).into(ivProfileImage);
+        Picasso.with(this).load(user.getProfileImageUrl())
+                .transform(new RoundedCornersTransformation(3,3)).into(ivProfileImage);
+
+
     }
 
     @Override
@@ -163,5 +169,10 @@ public class ProfileActivity extends AppCompatActivity {
     public void onComposeClick(MenuItem mi){
         Intent i = new Intent(this,ComposeActivity.class);
         startActivityForResult(i, ComposeActivity.COMPOSE_REQUEST_CODE);
+    }
+
+    public void goHome(MenuItem item) {
+        Intent i = new Intent(this, TimelineActivity.class);
+        startActivity(i);
     }
 }
