@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.codepath.apps.tweeter.models.Tweet;
@@ -35,7 +36,7 @@ public class TweetsArrayAdapter extends ArrayAdapter<Tweet>{
     public View getView(int position, View convertView, ViewGroup parent) {
         final User user;
         // 1. get tweet
-        Tweet tweet = getItem(position);
+        final Tweet tweet = getItem(position);
 
         // 2. find/inflate template
         if (convertView == null){
@@ -48,6 +49,7 @@ public class TweetsArrayAdapter extends ArrayAdapter<Tweet>{
         TextView tvBody = (TextView) convertView.findViewById(R.id.tvBody);
         TextView tvScreenName = (TextView) convertView.findViewById(R.id.tvScreenName);
         TextView tvTimeStamp = (TextView) convertView.findViewById(R.id.tvTimeStamp);
+        LinearLayout yas = (LinearLayout) convertView.findViewById(R.id.yas);
 
         // populate data into subviews
         user = tweet.getUser();
@@ -60,6 +62,7 @@ public class TweetsArrayAdapter extends ArrayAdapter<Tweet>{
         tvTimeStamp.setText(tweet.getRelativeDate());
 
         tvBody.setText(tweet.getBody());
+
         ivProfileImage.setImageResource(android.R.color.transparent); // clears out old image for recycler view
         Picasso.with(getContext()).load(tweet.getUser().getProfileImageUrl())
                 .transform(new RoundedCornersTransformation(3, 3)).into(ivProfileImage);
@@ -71,6 +74,26 @@ public class TweetsArrayAdapter extends ArrayAdapter<Tweet>{
                 //Toast.makeText(getContext(), "clicked on image!", Toast.LENGTH_LONG).show();
                 Intent i = new Intent(getContext(), ProfileActivity.class);
                 i.putExtra("user", user);
+                getContext().startActivity(i);
+            }
+        });
+
+        tvUserName.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(getContext(), ProfileActivity.class);
+                i.putExtra("user", user);
+                getContext().startActivity(i);
+            }
+        });
+
+
+        tvBody.setOnClickListener(new View.OnClickListener(){
+
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(getContext(), TweetDetailActivity.class);
+                i.putExtra("tweet", tweet);
                 getContext().startActivity(i);
             }
         });

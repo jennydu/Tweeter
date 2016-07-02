@@ -3,6 +3,48 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#ffffff"
     tools:context="com.codepath.apps.tweeter.TweetDetailActivity">
 
+    <LinearLayout
+        android:id="@+id/hoola"
+        android:orientation="horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:layout_width="75dp"
+            android:layout_height="75dp"
+            android:id="@+id/ivProfilePicture" />
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/vtScreenName"
+                android:layout_alignBottom="@+id/tvBody" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/tvName" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/yas"
+        android:layout_below="@id/hoola"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/tvBody"
+            android:layout_below="@+id/hoola"
+            />
+    </LinearLayout>
 </RelativeLayout>
